@@ -1,0 +1,24 @@
+name: Run Telegram Bot Daily
+
+on:
+  schedule:
+    - cron: '1 21 * * *'  # ساعت 00:01 تهران (ایران +3:30 از UTC)
+  workflow_dispatch:
+
+jobs:
+  run-bot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install requests beautifulsoup4 python-telegram-bot schedule pytz
+
+      - name: Run bot
+        run: python bot.py
